@@ -1,0 +1,46 @@
+enable 
+configure terminal
+hostname SW-CISCOFW-BERLIM05
+enable secret grupo05
+banner motd "WARNING"
+line console 0
+password grupo05
+login
+exit
+service password-encryption
+username admin privilege 15 secret grupo05
+ip domain-name grupo05.com
+crypto key generate rsa general-key modulus 1024
+ip ssh version 2
+line vty 0 15
+login local
+transport input ssh
+exit
+interface GigabitEthernet0/1
+no shutdown
+exit
+interface FastEthernet0/1
+switchport mode access
+switchport port-security 
+exit
+interface FastEthernet0/2
+switchport mode access
+switchport port-security 
+exit
+vlan 10
+vlan 20
+interface vlan 1
+ip address 172.30.105.15 255.255.255.0
+no shutdown
+description REDE ROUTER-FIREWALL
+ip default-gateway 172.30.105.1
+interface vlan10
+ip address 172.31.105.254 255.255.255.0
+no shutdown
+description INTERFACE DE REDE SERVIDORES
+exit
+interface vlan20
+ip address 10.10.105.254 255.255.255.0
+no shutdown 
+description INTERFACE DE REDE CLIENTES
+do wr
