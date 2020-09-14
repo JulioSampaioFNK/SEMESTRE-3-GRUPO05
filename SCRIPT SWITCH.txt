@@ -16,9 +16,6 @@ line vty 0 15
 login local
 transport input ssh
 exit
-interface GigabitEthernet0/1
-no shutdown
-exit
 interface FastEthernet0/1
 switchport mode access
 switchport port-security 
@@ -26,6 +23,12 @@ exit
 interface FastEthernet0/2
 switchport mode access
 switchport port-security 
+exit
+interface GigabitEthernet0/1
+no shutdown
+switchport mode trunk
+switchport trunk native vlan 99
+switchport trunk allowed vlan 14,99
 exit
 vlan 10
 vlan 20
